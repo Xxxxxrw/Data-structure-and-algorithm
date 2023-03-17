@@ -7,7 +7,7 @@ int main()
     cin >> m >> n;
     dp[1][1] = dp[2][1] = 1;
     int len = 2;
-    for(int i = 3; i <= n - m + 1; i++)
+    for(int i = 3; i <= n - m + 1; i++)//¸ß¾«¶È 
     {
         for(int j = 1; j < len; j++)
         {
@@ -15,8 +15,8 @@ int main()
 		}
 		for(int j = 1; j < len; j++)
 		{
-			dp[i][j+1] += dp[i][j]/10;
-			dp[i][j] = dp[i][j]%10;
+			dp[i][j+1] += dp[i][j] / 10;
+			dp[i][j] = dp[i][j] % 10;
 		}
 		if(dp[i][len])
 		{
@@ -25,7 +25,7 @@ int main()
     }
     for(int i = len-1; i >= 1; i--)
     {
-    	cout << dp[n-m+1][i];
+    	cout << dp[n-m+1][i] << endl;
 	}
     return 0;
 }
