@@ -1,37 +1,40 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
 using namespace std;
-int a[100005], b[100005], jin[100005];
-int N, Ma, Mb;
-long long jz, ans;
+const long long int MAX = 1e5 + 5;
+const long long MOD = 1000000007;
+
 int main()
 {
-	cin >> N >> Ma;
-	for(int i = 1; i <= Ma; i++) cin >> a[i];
-	
-	cin >> Mb;
-	if(Ma > Mb)
-	{
-		for(int i = 1; i <= Ma - Mb; i++)
-			b[i] = 0;
-		for(int i = Ma - Mb + 1; i <= Ma; i++)
-			cin >> b[i];
-	}
-	else
-		for(int i = 1; i <= Mb; i++) 
-			cin >> b[i];
-	
-	for(int i = 1; i <= Ma; i++)
-	{
-		jin[i] = max(2, max(a[i], b[i]) + 1);
-	}
-	
-	jz = 1;
-	for(int i = Ma; i >= 1; i--)
-	{
-		if(i < Ma)
-			jz *= jin[i+1];
-		ans += jz * (a[i] - b[i]);
-	}
-	cout << ans;
-	return 0;
+    int N;                    //最高为N进制
+    cin >> N;
+    int Ma, Mb;                //数A、数B的位数
+    cin >> Ma;
+    int Xa[MAX], Xb[MAX];    //数A、数B再十进制下的表示
+    long long int answer = 0, base = 1;
+
+    //输入A、B  低位0 高位Ma/Mb
+    for (int i = Ma; i >= 1; i--)
+        cin >> Xa[i];
+
+    cin >> Mb;
+    for (int i = Mb; i >= 1; i--)
+        cin >> Xb[i];
+
+
+    for (int i = 1; i <= Ma; i++)
+    {
+        //weight: 该位该取多少进制
+        int weight = max(Xa[i], Xb[i]) + 1;
+        if (weight < 2)
+            weight = 2;
+
+        //规则：X[i]与后面的所有进制逐个相乘
+        //base: 根据规则，最后该位数值转换成10进制后乘的倍数
+        answer = (answer + (Xa[i] - Xb[i]) * base) % MOD;
+        base = (base * weight) % MOD;
+    }
+    cout << answer % MOD << endl;
+
+    return 0;
 }
