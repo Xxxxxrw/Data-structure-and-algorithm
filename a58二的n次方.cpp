@@ -1,40 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
-int v[10005];
-
-int t1 = 1;
-int n;
-void vdouble()
-{
-	for(int i = 0; i < t1; i++)
-	{
-		v[i] *= 2;
-	}
-    for(int i = 0; i < t1; i++)
-    {
-    	if(v[i] > 9)
-    	{
-    		v[i + 1] += v[i] / 10;
-    		if(i + 1 >= t1) t1++;
-    		v[i] %= 10;
-		}
-	}
-}
-
+int N, a[10005], t = 1;
 int main()
 {
-    cin >> n;
-    
-    v[0] = 1;
-    while(n)
+    cin >> N;
+    a[0] = 1;
+    for(int i = 0; i < N; i++)
     {
-        vdouble();
-        n--;
+        for(int j = 0; j < t; j++)
+        {
+            a[j] *= 2;
+        }
+        
+        for(int j = 0; j <= t; j++)
+        {
+            a[j + 1] += a[j] / 10;
+            a[j] %= 10;
+        }
+        if(a[t]) t++;
     }
-    
-    for(int i = t1 - 1; t1 >= 0; t1--)
+    for(int i = t-1; i >= 0; i--)
     {
-        cout << v[i];
+        cout << a[i];
     }
     return 0;
 }
